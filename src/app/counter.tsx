@@ -1,4 +1,9 @@
-import { decrement, increment } from "@/redux/features/counter/counterSlice";
+import { Button } from "@/components/ui/button";
+import {
+  decrement,
+  increment,
+  reset,
+} from "@/redux/features/counter/counterSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 
 export default function Counter() {
@@ -10,34 +15,43 @@ export default function Counter() {
     dispatch(increment(amount));
   };
 
-  const handleDecrement = () => {
-    dispatch(decrement());
+  const handleDecrement = (amount: number) => {
+    dispatch(decrement(amount));
+  };
+
+  const handleReset = () => {
+    dispatch(reset());
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-8">
+    <div
+      className="min-h-screen flex flex-col items-center justify-center gap-8"
+      role="main"
+    >
       <h1 className="text-3xl font-bold">Counter App</h1>
-      <h2 className="text-6xl font-bold">{count}</h2>
-      <div className="flex gap-4">
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md transition-colors"
-          onClick={() => handleIncrement(1)}
-        >
-          Increment
-        </button>
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md transition-colors"
-          onClick={() => handleIncrement(5)}
-        >
-          Increment by 5
-        </button>
-        <button
-          className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md transition-colors"
-          onClick={handleDecrement}
-        >
-          Decrement
-        </button>
+      <div className="flex flex-col items-center gap-2">
+        <h2 className="text-6xl font-bold" aria-live="polite">
+          {count}
+        </h2>
+        <p className="">Current count value</p>
       </div>
+      <div className="flex flex-wrap gap-4">
+        <Button onClick={() => handleIncrement(1)} aria-label="Increment by 1">
+          Increment
+        </Button>
+        <Button onClick={() => handleIncrement(5)}>Increment by 5</Button>
+        <Button onClick={() => handleDecrement(1)} aria-label="Decrement by 1">
+          Decrement
+        </Button>
+        <Button onClick={() => handleDecrement(5)}>Decrement by 5</Button>
+      </div>
+      <Button
+        className="bg-gray-500 hover:bg-gray-600 "
+        onClick={handleReset}
+        aria-label="Reset counter"
+      >
+        Reset
+      </Button>
     </div>
   );
 }
